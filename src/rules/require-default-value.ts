@@ -7,8 +7,8 @@ export const requireDefaultValueRule = {
 		docs: { description: 'Require default value in i18n translate calls' },
 		schema: [baseSchema],
 		messages: {
-			missingDefaultValue: 'i18n key "{{key}}" 未配置默认值，请为 t() 调用提供默认文案。',
-			forbiddenDefaultValue: 'i18n key "{{key}}" 不允许配置默认值，请移除 t() 调用中的默认文案。',
+			missingDefaultValue: 'i18n key "{{key}}" is missing a default value. Please provide default text in the t() call.',
+			forbiddenDefaultValue: 'i18n key "{{key}}" does not allow a default value. Please remove default text from the t() call.',
 		},
 	},
 	create(context: any) {

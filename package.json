@@ -25,17 +25,20 @@
     "files": [
         "dist",
         "types",
+        "README.md",
         "README.zh-CN.md",
+        "CHANGELOG.md",
+        "package.json",
         "LICENSE"
     ],
-	"scripts": {
-		"build": "rm -rf dist && rollup -c && rm -rf types && tsc -p tsconfig.json -d --declarationDir types --declarationMap --emitDeclarationOnly",
-		"lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-		"typecheck": "tsc -p tsconfig.json --noEmit",
-		"test": "npm run lint && npm run typecheck && vitest run",
-		"test:coverage": "vitest run --coverage",
-		"test:watch": "vitest",
-		"clean": "rm -rf dist types",
+    "scripts": {
+        "build": "rm -rf dist && rollup -c && rm -rf types && tsc -p tsconfig.json -d --declarationDir types --declarationMap --emitDeclarationOnly",
+        "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+        "typecheck": "tsc -p tsconfig.json --noEmit",
+        "test": "npm run lint && npm run typecheck && vitest run",
+        "test:coverage": "vitest run --coverage",
+        "test:watch": "vitest",
+        "clean": "rm -rf dist types",
         "release": "release-it patch"
     },
     "keywords": [
@@ -65,10 +68,10 @@
         "rollup": "^4.50.0",
         "rollup-plugin-typescript2": "^0.36.0",
         "typescript": "^5.9.2",
-		"typescript-eslint": "^8.46.0",
-		"vitest": "^4.0.7",
-		"@vitest/coverage-v8": "^4.0.7"
-	},
+        "typescript-eslint": "^8.46.0",
+        "vitest": "^4.0.7",
+        "@vitest/coverage-v8": "^4.0.7"
+    },
     "release-it": {
         "git": {
             "requireCleanWorkingDir": false,

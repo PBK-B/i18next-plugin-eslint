@@ -8,7 +8,7 @@ export const invalidSegmentRule = {
 		docs: { description: 'Validate i18n key segment naming' },
 		schema: [baseSchema],
 		messages: {
-			invalidSegment: 'i18n key "{{key}}" 的分段 "{{segment}}" 不符合命名规范（需小写 snake_case，且不能以数字开头）。',
+			invalidSegment: 'The segment "{{segment}}" in i18n key "{{key}}" is invalid (must be lowercase snake_case and cannot start with a number).',
 		},
 	},
 	create(context: any) {

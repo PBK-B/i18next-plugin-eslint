@@ -8,7 +8,7 @@ export const duplicateSuffixRule = {
 		docs: { description: 'Disallow duplicate i18n key suffix in one file' },
 		schema: [baseSchema],
 		messages: {
-			duplicateSuffix: '同一文件中 i18n key 后缀 "{{suffix}}" 重复（首次出现在第 {{line}} 行）。',
+			duplicateSuffix: 'Duplicate i18n key suffix "{{suffix}}" in the same file (first appears on line {{line}}).',
 		},
 	},
 	create(context: any) {

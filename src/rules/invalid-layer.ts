@@ -17,7 +17,7 @@ export const invalidLayerRule = {
 		docs: { description: 'Validate i18n key layer against file path' },
 		schema: [baseSchema],
 		messages: {
-			invalidLayer: 'i18n key "{{key}}" 的 layer "{{layer}}" 与文件路径要求不一致，期望 "{{expected}}"。',
+			invalidLayer: 'The layer "{{layer}}" in i18n key "{{key}}" does not match the file path; expected "{{expected}}".',
 		},
 	},
 	create(context: any) {

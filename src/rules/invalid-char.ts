@@ -8,7 +8,7 @@ export const invalidCharRule = {
 		docs: { description: 'Validate i18n key characters' },
 		schema: [baseSchema],
 		messages: {
-			invalidChar: 'i18n key "{{key}}" 只能包含小写字母、数字、下划线和点。',
+			invalidChar: 'i18n key "{{key}}" can only contain lowercase letters, numbers, underscores, and dots.',
 		},
 	},
 	create(context: any) {

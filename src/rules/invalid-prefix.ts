@@ -8,7 +8,7 @@ export const invalidPrefixRule = {
 		docs: { description: 'Validate i18n key prefix allow-list' },
 		schema: [baseSchema],
 		messages: {
-			invalidPrefix: 'i18n key "{{key}}" 的 prefix "{{prefix}}" 不在允许列表中：{{prefixes}}。',
+			invalidPrefix: 'The prefix "{{prefix}}" in i18n key "{{key}}" is not in the allowed list: {{prefixes}}.',
 		},
 	},
 	create(context: any) {

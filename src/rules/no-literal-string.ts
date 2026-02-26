@@ -21,7 +21,7 @@ export const noLiteralStringRule = {
 		docs: { description: 'Disallow hardcoded natural-language strings in JSX' },
 		schema: [lintSchema],
 		messages: {
-			hardcodedText: '检测到硬编码文案 "{{text}}"，请使用 i18n key。',
+			hardcodedText: 'Detected hardcoded text "{{text}}". Please use an i18n key.',
 		},
 	},
 	create(context: any) {

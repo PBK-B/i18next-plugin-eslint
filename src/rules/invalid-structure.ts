@@ -7,7 +7,7 @@ export const invalidStructureRule = {
 		docs: { description: 'Validate i18n key structure' },
 		schema: [baseSchema],
 		messages: {
-			invalidStructure: 'i18n key "{{key}}" 必须满足 ${prefix}.${layer}.${suffix}，至少包含 3 段。',
+			invalidStructure: 'i18n key "{{key}}" must follow ${prefix}.${layer}.${suffix} and contain at least 3 segments.',
 		},
 	},
 	create(context: any) {

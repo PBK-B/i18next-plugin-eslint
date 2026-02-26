@@ -7,8 +7,8 @@ export const interpolationParamsRule = {
 		docs: { description: 'Check interpolation params in defaultValue and options' },
 		schema: [baseSchema],
 		messages: {
-			missingInterpolation: 'i18n 默认文案中使用了插值参数 "{{name}}"，但 options 未提供该参数。',
-			unusedInterpolation: 'i18n options 传入了 "{{name}}"，但默认文案未使用该参数。',
+			missingInterpolation: 'Interpolation parameter "{{name}}" is used in the i18n default text, but not provided in options.',
+			unusedInterpolation: 'Interpolation parameter "{{name}}" is provided in i18n options, but not used in the default text.',
 		},
 	},
 	create(context: any) {
