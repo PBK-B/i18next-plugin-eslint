@@ -6,6 +6,8 @@ i18next key 规范与 JSX 硬编码文案检查 ESLint 插件。
 
 [English README](./README.md)
 
+[贡献指南（英文）](./CONTRIBUTING.md)
+
 ## 功能概览
 
 - 约束 i18n key 规范：
