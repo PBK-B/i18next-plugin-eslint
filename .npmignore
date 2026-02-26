@@ -1,0 +1,7 @@
+src/
+test/
+i18next-cli/
+*.log
+vitest.config.ts
+eslint.config.js
+tsconfig.json
