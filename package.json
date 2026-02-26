@@ -30,11 +30,12 @@
     ],
     "scripts": {
         "build": "rm -rf dist && rollup -c && rm -rf types && tsc -p tsconfig.json -d --declarationDir types --declarationMap --emitDeclarationOnly",
-        "lint": "eslint .",
+        "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
         "typecheck": "tsc -p tsconfig.json --noEmit",
         "test": "npm run lint && npm run typecheck && vitest run",
         "test:watch": "vitest",
-        "clean": "rm -rf dist types"
+        "clean": "rm -rf dist types",
+        "release": "release-it patch"
     },
     "keywords": [
         "eslint",
@@ -52,16 +53,36 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.39.1",
+        "@release-it/conventional-changelog": "^10.0.5",
         "@rollup/plugin-replace": "^6.0.3",
         "@types/node": "^24.3.0",
         "eslint": "^9.39.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.5",
         "prettier": "^3.8.1",
+        "release-it": "^19.2.4",
         "rollup": "^4.50.0",
         "rollup-plugin-typescript2": "^0.36.0",
         "typescript": "^5.9.2",
         "typescript-eslint": "^8.46.0",
         "vitest": "^4.0.7"
+    },
+    "release-it": {
+        "git": {
+            "requireCleanWorkingDir": false,
+            "commitMessage": "chore: release v${version}",
+            "commit": true,
+            "tag": true,
+            "push": false
+        },
+        "npm": {
+            "publish": false
+        },
+        "plugins": {
+            "@release-it/conventional-changelog": {
+                "preset": "angular",
+                "infile": "CHANGELOG.md"
+            }
+        }
     }
 }
