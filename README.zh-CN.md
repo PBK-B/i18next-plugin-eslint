@@ -4,7 +4,7 @@
  * @FilePath: /i18next-plugin-eslint/README.zh-CN.md
 -->
 
-# i18n-key ESLint 插件文档（中文）
+# i18next ESLint 插件文档
 
 本文档说明 `@i18next-plugin/eslint` 的规则能力、配置方式、自动修复行为与接入建议。
 
