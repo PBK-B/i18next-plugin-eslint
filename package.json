@@ -1,6 +1,6 @@
 {
 	"name": "@i18next-plugin/eslint",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "ESLint plugin for i18next key and literal text rules.",
 	"type": "module",
 	"main": "./dist/cjs/index.js",
