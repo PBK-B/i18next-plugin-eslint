@@ -87,19 +87,9 @@ describe('helpers ast utils', () => {
 
 	it('matches translate call forms', () => {
 		expect(isI18nTranslateCall({ callee: { type: 'Identifier', name: 't' } }, new Set(['t']))).toBe(true);
-		expect(
-			isI18nTranslateCall(
-				{ callee: { type: 'MemberExpression', computed: false, property: { type: 'Identifier', name: 't' } } },
-				new Set(['x']),
-			),
-		).toBe(true);
+		expect(isI18nTranslateCall({ callee: { type: 'MemberExpression', computed: false, property: { type: 'Identifier', name: 't' } } }, new Set(['x']))).toBe(true);
 		expect(isI18nTranslateCall({ callee: { type: 'Identifier', name: 'x' } }, new Set(['t']))).toBe(false);
-		expect(
-			isI18nTranslateCall(
-				{ callee: { type: 'MemberExpression', computed: true, property: { type: 'Identifier', name: 't' } } },
-				new Set(['t']),
-			),
-		).toBe(false);
+		expect(isI18nTranslateCall({ callee: { type: 'MemberExpression', computed: true, property: { type: 'Identifier', name: 't' } } }, new Set(['t']))).toBe(false);
 	});
 
 	it('handles object and jsx helpers', () => {

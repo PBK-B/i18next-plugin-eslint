@@ -53,8 +53,7 @@ describe('rules branch coverage', () => {
 	});
 
 	it('interpolation-params supports object defaultValue style and alias tracking', async () => {
-		const code =
-			"import { t as tt } from '@/i18n'; tt('app.pages.main.total', { defaultValue: '{{count}} items', count: 1, foo: 2 })";
+		const code = "import { t as tt } from '@/i18n'; tt('app.pages.main.total', { defaultValue: '{{count}} items', count: 1, foo: 2 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(2);
 		expect(res.messages.map((m) => m.message).join('|')).toContain('未提供该参数');
@@ -67,16 +66,14 @@ describe('rules branch coverage', () => {
 	});
 
 	it('interpolation-params tracks useTranslation alias destructuring', async () => {
-		const code =
-			"import { useTranslation as useT } from 'react-i18next'; const { t: tx } = useT(); tx('app.pages.main.total', '{{count}} items', { count: 1 })";
+		const code = "import { useTranslation as useT } from 'react-i18next'; const { t: tx } = useT(); tx('app.pages.main.total', '{{count}} items', { count: 1 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(1);
 		expect(res.messages[0]?.message).toContain('未提供该参数');
 	});
 
 	it('interpolation-params handles plain useTranslation import and object pattern noise', async () => {
-		const code =
-			"import { useTranslation } from 'react-i18next'; const { i18n, t } = useTranslation(); t('app.pages.main.total', '{{count}} items', { count: 1 })";
+		const code = "import { useTranslation } from 'react-i18next'; const { i18n, t } = useTranslation(); t('app.pages.main.total', '{{count}} items', { count: 1 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(1);
 		expect(res.messages[0]?.message).toContain('未提供该参数');
@@ -115,8 +112,7 @@ describe('rules branch coverage', () => {
 	});
 
 	it('no-literal-string tracks t from useTranslation alias', async () => {
-		const code =
-			"import { useTranslation as useT } from 'react-i18next'; export const X=()=>{ const { t: tx } = useT(); return <p>欢迎</p>; }";
+		const code = "import { useTranslation as useT } from 'react-i18next'; export const X=()=>{ const { t: tx } = useT(); return <p>欢迎</p>; }";
 		const res = await runRule('no-literal-string', code, {
 			filePath: 'src/pages/main/index.tsx',
 			options: { sourceRoot: 'src', fixPrefix: 'app' },
@@ -127,8 +123,7 @@ describe('rules branch coverage', () => {
 	});
 
 	it('no-literal-string handles useTranslation with object pattern non-t props', async () => {
-		const code =
-			"import { useTranslation } from 'react-i18next'; export const X=()=>{ const { i18n, t } = useTranslation(); return <p>你好</p>; }";
+		const code = "import { useTranslation } from 'react-i18next'; export const X=()=>{ const { i18n, t } = useTranslation(); return <p>你好</p>; }";
 		const res = await runRule('no-literal-string', code, {
 			filePath: 'src/pages/main/index.tsx',
 			options: { sourceRoot: 'src', fixPrefix: 'app' },
@@ -139,8 +134,7 @@ describe('rules branch coverage', () => {
 	});
 
 	it('require-default-value resolves useTranslation alias with default option style', async () => {
-		const code =
-			"import { useTranslation as useT } from 'react-i18next'; const { t: tx } = useT(); tx('app.pages.main.submit', { defaultValue: '提交' })";
+		const code = "import { useTranslation as useT } from 'react-i18next'; const { t: tx } = useT(); tx('app.pages.main.submit', { defaultValue: '提交' })";
 		const res = await runRule('require-default-value', code, {
 			options: { defaultValuePolicy: 'forbidden' },
 		});

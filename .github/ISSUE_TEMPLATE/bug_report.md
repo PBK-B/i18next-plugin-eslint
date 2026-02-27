@@ -1,9 +1,9 @@
 ---
 name: Bug report
 about: Report a bug in @i18next-plugin/eslint
-title: "[Bug] "
+title: '[Bug] '
 labels: bug
-assignees: ""
+assignees: ''
 ---
 
 ## Summary

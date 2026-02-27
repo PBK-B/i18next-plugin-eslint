@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: Suggest an idea or improvement for @i18next-plugin/eslint
-title: "[Feature] "
+title: '[Feature] '
 labels: enhancement
-assignees: ""
+assignees: ''
 ---
 
 ## Summary

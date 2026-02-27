@@ -42,9 +42,9 @@ This runs lint, typecheck, and unit tests.
 3. Run `npm run test` before opening a PR.
 4. If you changed source files, run `npm run build` to refresh `dist` and `types`.
 5. Open a PR with a clear summary of:
-   - what changed
-   - why it changed
-   - how it was verified
+    - what changed
+    - why it changed
+    - how it was verified
 
 ## Rule Changes Checklist
 
