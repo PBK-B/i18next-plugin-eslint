@@ -8,7 +8,7 @@ describe('behavior rules', () => {
 			options: { defaultValuePolicy: 'required' },
 		});
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('未配置默认值');
+		expect(res.messages[0]?.messageId).toBe('missingDefaultValue');
 	});
 
 	it('require-default-value: forbidden policy reports existing default', async () => {
@@ -16,7 +16,7 @@ describe('behavior rules', () => {
 			options: { defaultValuePolicy: 'forbidden' },
 		});
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('不允许配置默认值');
+		expect(res.messages[0]?.messageId).toBe('forbiddenDefaultValue');
 	});
 
 	it('require-default-value: no report when default exists with required', async () => {
@@ -53,8 +53,9 @@ describe('behavior rules', () => {
 	it('interpolation-params reports missing and unused option keys', async () => {
 		const res = await runRule('interpolation-params', "t('app.pages.home.total', '{{count}} items', { total: 3, foo: 1 })");
 		expect(res.messages).toHaveLength(3);
-		expect(res.messages.map((m) => m.message).join('|')).toContain('未提供该参数');
-		expect(res.messages.map((m) => m.message).join('|')).toContain('未使用该参数');
+		const messageIds = res.messages.map((m) => m.messageId);
+		expect(messageIds).toContain('missingInterpolation');
+		expect(messageIds).toContain('unusedInterpolation');
 	});
 
 	it('interpolation-params honors disabled check option', async () => {

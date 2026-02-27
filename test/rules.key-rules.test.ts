@@ -13,7 +13,7 @@ describe('key-format rules', () => {
 
 	it('invalid-structure reports short key', async () => {
 		const res = await runRule('invalid-structure', "t('only_two')");
-		expect(res.messages[0]?.message).toContain('至少包含 3 段');
+		expect(res.messages[0]?.messageId).toBe('invalidStructure');
 	});
 
 	it('invalid-segment reports and fixes segment style', async () => {

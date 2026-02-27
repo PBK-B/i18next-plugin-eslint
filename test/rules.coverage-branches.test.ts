@@ -56,8 +56,9 @@ describe('rules branch coverage', () => {
 		const code = "import { t as tt } from '@/i18n'; tt('app.pages.main.total', { defaultValue: '{{count}} items', count: 1, foo: 2 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(2);
-		expect(res.messages.map((m) => m.message).join('|')).toContain('未提供该参数');
-		expect(res.messages.map((m) => m.message).join('|')).toContain('未使用该参数');
+		const messageIds = res.messages.map((m) => m.messageId);
+		expect(messageIds).toContain('missingInterpolation');
+		expect(messageIds).toContain('unusedInterpolation');
 	});
 
 	it('interpolation-params ignores when no interpolation tokens', async () => {
@@ -69,14 +70,14 @@ describe('rules branch coverage', () => {
 		const code = "import { useTranslation as useT } from 'react-i18next'; const { t: tx } = useT(); tx('app.pages.main.total', '{{count}} items', { count: 1 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('未提供该参数');
+		expect(res.messages[0]?.messageId).toBe('missingInterpolation');
 	});
 
 	it('interpolation-params handles plain useTranslation import and object pattern noise', async () => {
 		const code = "import { useTranslation } from 'react-i18next'; const { i18n, t } = useTranslation(); t('app.pages.main.total', '{{count}} items', { count: 1 })";
 		const res = await runRule('interpolation-params', code);
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('未提供该参数');
+		expect(res.messages[0]?.messageId).toBe('missingInterpolation');
 	});
 
 	it('no-literal-string respects autoFix false and tag/attr filters', async () => {
@@ -139,7 +140,7 @@ describe('rules branch coverage', () => {
 			options: { defaultValuePolicy: 'forbidden' },
 		});
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('不允许配置默认值');
+		expect(res.messages[0]?.messageId).toBe('forbiddenDefaultValue');
 	});
 
 	it('invalid-structure does not report valid key', async () => {

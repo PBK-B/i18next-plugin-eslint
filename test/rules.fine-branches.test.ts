@@ -66,7 +66,7 @@ describe('fine-grained branch cases', () => {
 	it('require-default-value runs default policy path when no options provided', async () => {
 		const res = await runRule('require-default-value', "t('app.pages.main.submit')");
 		expect(res.messages).toHaveLength(1);
-		expect(res.messages[0]?.message).toContain('未配置默认值');
+		expect(res.messages[0]?.messageId).toBe('missingDefaultValue');
 	});
 
 	it('interpolation-params skips when defaultValue or options are missing', async () => {
