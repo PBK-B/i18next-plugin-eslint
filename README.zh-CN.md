@@ -11,17 +11,19 @@ i18next key 规范与 JSX 硬编码文案检查 ESLint 插件。
 ## 功能概览
 
 - 约束 i18n key 规范：
-  - `invalid-char`
-  - `invalid-structure`
-  - `invalid-segment`
-  - `invalid-prefix`
-  - `invalid-layer`
-  - `duplicate-suffix`
-  - `require-default-value`
+    - `invalid-char`
+    - `invalid-structure`
+    - `invalid-segment`
+    - `invalid-prefix`
+    - `invalid-layer`
+    - `duplicate-suffix`
+    - `require-default-value`
 - 检测 JSX 中硬编码自然语言文本：
-  - `no-literal-string`
+    - `no-literal-string`
 - 校验默认文案中的插值参数与 options 是否一致：
-  - `interpolation-params`
+    - `interpolation-params`
+- 当默认文案使用字符串拼接时，提示改用插值：
+    - `prefer-interpolation`
 
 支持识别的调用方式：
 
@@ -41,33 +43,33 @@ npm i -D @i18next-plugin/eslint
 import i18nKeyPlugin, { createI18nRulesConfig, createI18nLintRulesConfig } from '@i18next-plugin/eslint';
 
 const i18nRuleOptions = {
-  allowedPrefixes: ['lzc_dev_center', 'lzc_site', 'lzc_as', 'lzc_plg'],
-  sourceRoot: 'src',
-  sharedLayers: ['common'],
-  defaultValuePolicy: 'required',
-  checkInterpolationParams: true,
+	allowedPrefixes: ['lzc_dev_center', 'lzc_site', 'lzc_as', 'lzc_plg'],
+	sourceRoot: 'src',
+	sharedLayers: ['common'],
+	defaultValuePolicy: 'required',
+	checkInterpolationParams: true,
 
-  // no-literal-string 可选项
-  autoFix: true,
-  fixPrefix: 'lzc_dev_center',
-  i18nImportSource: '@/i18n',
+	// no-literal-string 可选项
+	autoFix: true,
+	fixPrefix: 'lzc_dev_center',
+	i18nImportSource: '@/i18n',
 };
 
 export default [
-  {
-    plugins: {
-      'i18n-key': i18nKeyPlugin,
-    },
-    rules: {
-      ...i18nKeyPlugin.configs.recommended.rules,
-      ...createI18nRulesConfig('error', i18nRuleOptions),
-      ...createI18nLintRulesConfig('warn', i18nRuleOptions),
+	{
+		plugins: {
+			'i18n-key': i18nKeyPlugin,
+		},
+		rules: {
+			...i18nKeyPlugin.configs.recommended.rules,
+			...createI18nRulesConfig('error', i18nRuleOptions),
+			...createI18nLintRulesConfig('warn', i18nRuleOptions),
 
-      // 单条规则覆盖示例
-      'i18n-key/invalid-layer': ['warn', i18nRuleOptions],
-      'i18n-key/require-default-value': ['error', { ...i18nRuleOptions, defaultValuePolicy: 'forbidden' }],
-    },
-  },
+			// 单条规则覆盖示例
+			'i18n-key/invalid-layer': ['warn', i18nRuleOptions],
+			'i18n-key/require-default-value': ['error', { ...i18nRuleOptions, defaultValuePolicy: 'forbidden' }],
+		},
+	},
 ];
 ```
 
@@ -81,31 +83,23 @@ export default [
 
 ```ts
 type I18nRuleOptions = {
-  allowedPrefixes?: string[] | null;
-  sourceRoot?: string;
-  sharedLayers?: string[];
-  defaultValuePolicy?: 'required' | 'forbidden';
-  requireDefaultValue?: boolean;
-  checkInterpolationParams?: boolean;
-  disabledRules?: Array<
-    | 'invalid-char'
-    | 'invalid-structure'
-    | 'invalid-segment'
-    | 'invalid-prefix'
-    | 'invalid-layer'
-    | 'duplicate-suffix'
-    | 'require-default-value'
-  >;
+	allowedPrefixes?: string[] | null;
+	sourceRoot?: string;
+	sharedLayers?: string[];
+	defaultValuePolicy?: 'required' | 'forbidden';
+	requireDefaultValue?: boolean;
+	checkInterpolationParams?: boolean;
+	disabledRules?: Array<'invalid-char' | 'invalid-structure' | 'invalid-segment' | 'invalid-prefix' | 'invalid-layer' | 'duplicate-suffix' | 'require-default-value'>;
 };
 
 type I18nLintRuleOptions = I18nRuleOptions & {
-  acceptedTags?: string[];
-  acceptedAttributes?: string[];
-  ignoredTags?: string[];
-  ignoredAttributes?: string[];
-  autoFix?: boolean;
-  fixPrefix?: string;
-  i18nImportSource?: string;
+	acceptedTags?: string[];
+	acceptedAttributes?: string[];
+	ignoredTags?: string[];
+	ignoredAttributes?: string[];
+	autoFix?: boolean;
+	fixPrefix?: string;
+	i18nImportSource?: string;
 };
 ```
 
@@ -141,6 +135,7 @@ type I18nLintRuleOptions = I18nRuleOptions & {
 
 - `i18n-key/no-literal-string`（可自动修复）
 - `i18n-key/interpolation-params`（不可自动修复）
+- `i18n-key/prefer-interpolation`（不可自动修复）
 
 ## 自动修复
 
@@ -274,6 +269,17 @@ t('lzc_dev_center.pages.main.index.submit');
 t('lzc_dev_center.pages.main.total', '{{count}} items', { total: 3 });
 // 建议修复后
 t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3 });
+```
+
+### `i18n-key/prefer-interpolation`
+
+当默认文案通过字符串拼接构造时给出提示，建议改为插值占位符。（不可自动修复）
+
+```ts
+// 修复前
+t('lzc_dev_center.pages.main.total', '总数：' + count);
+// 建议修复后
+t('lzc_dev_center.pages.main.total', '总数：{{count}}', { count });
 ```
 
 ## 导出内容

@@ -17,6 +17,7 @@ describe('core plugin assembly', () => {
 			'require-default-value',
 			'no-literal-string',
 			'interpolation-params',
+			'prefer-interpolation',
 		]);
 	});
 
@@ -33,6 +34,7 @@ describe('core plugin assembly', () => {
 		const config = createI18nLintRulesConfig('error', options);
 		expect(config['i18n-key/no-literal-string']).toEqual(['error', options]);
 		expect(config['i18n-key/interpolation-params']).toEqual(['error', options]);
-		expect(Object.keys(config)).toHaveLength(2);
+		expect(config['i18n-key/prefer-interpolation']).toEqual(['error', options]);
+		expect(Object.keys(config)).toHaveLength(3);
 	});
 });

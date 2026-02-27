@@ -16,5 +16,6 @@ export function createI18nLintRulesConfig(level: RuleLevel = 'warn', options: I1
 	return {
 		'i18n-key/no-literal-string': [level, options],
 		'i18n-key/interpolation-params': [level, options],
+		'i18n-key/prefer-interpolation': [level, options],
 	};
 }

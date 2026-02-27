@@ -6,6 +6,7 @@ import { invalidPrefixRule } from './invalid-prefix';
 import { invalidSegmentRule } from './invalid-segment';
 import { invalidStructureRule } from './invalid-structure';
 import { noLiteralStringRule } from './no-literal-string';
+import { preferInterpolationRule } from './prefer-interpolation';
 import { requireDefaultValueRule } from './require-default-value';
 
 export const rules = {
@@ -18,4 +19,5 @@ export const rules = {
 	'require-default-value': requireDefaultValueRule,
 	'no-literal-string': noLiteralStringRule,
 	'interpolation-params': interpolationParamsRule,
+	'prefer-interpolation': preferInterpolationRule,
 };

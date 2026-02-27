@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/@i18next-plugin/eslint.svg)](https://www.npmjs.com/package/@i18next-plugin/eslint) [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-
 ESLint plugin for i18next key quality and JSX literal-text checks.
 
 [中文文档](./README.zh-CN.md)
@@ -12,17 +11,19 @@ ESLint plugin for i18next key quality and JSX literal-text checks.
 ## Features
 
 - Enforces i18n key quality:
-  - `invalid-char`
-  - `invalid-structure`
-  - `invalid-segment`
-  - `invalid-prefix`
-  - `invalid-layer`
-  - `duplicate-suffix`
-  - `require-default-value`
+    - `invalid-char`
+    - `invalid-structure`
+    - `invalid-segment`
+    - `invalid-prefix`
+    - `invalid-layer`
+    - `duplicate-suffix`
+    - `require-default-value`
 - Detects hardcoded natural-language text in JSX:
-  - `no-literal-string`
+    - `no-literal-string`
 - Validates interpolation placeholders between default text and options:
-  - `interpolation-params`
+    - `interpolation-params`
+- Suggests interpolation when default text uses string concatenation:
+    - `prefer-interpolation`
 
 Supported call styles:
 
@@ -42,33 +43,33 @@ npm i -D @i18next-plugin/eslint
 import i18nKeyPlugin, { createI18nRulesConfig, createI18nLintRulesConfig } from '@i18next-plugin/eslint';
 
 const i18nRuleOptions = {
-  allowedPrefixes: ['lzc_dev_center', 'lzc_site', 'lzc_as', 'lzc_plg'],
-  sourceRoot: 'src',
-  sharedLayers: ['common'],
-  defaultValuePolicy: 'required',
-  checkInterpolationParams: true,
+	allowedPrefixes: ['lzc_dev_center', 'lzc_site', 'lzc_as', 'lzc_plg'],
+	sourceRoot: 'src',
+	sharedLayers: ['common'],
+	defaultValuePolicy: 'required',
+	checkInterpolationParams: true,
 
-  // no-literal-string options
-  autoFix: true,
-  fixPrefix: 'lzc_dev_center',
-  i18nImportSource: '@/i18n',
+	// no-literal-string options
+	autoFix: true,
+	fixPrefix: 'lzc_dev_center',
+	i18nImportSource: '@/i18n',
 };
 
 export default [
-  {
-    plugins: {
-      'i18n-key': i18nKeyPlugin,
-    },
-    rules: {
-      ...i18nKeyPlugin.configs.recommended.rules,
-      ...createI18nRulesConfig('error', i18nRuleOptions),
-      ...createI18nLintRulesConfig('warn', i18nRuleOptions),
+	{
+		plugins: {
+			'i18n-key': i18nKeyPlugin,
+		},
+		rules: {
+			...i18nKeyPlugin.configs.recommended.rules,
+			...createI18nRulesConfig('error', i18nRuleOptions),
+			...createI18nLintRulesConfig('warn', i18nRuleOptions),
 
-      // per-rule override example
-      'i18n-key/invalid-layer': ['warn', i18nRuleOptions],
-      'i18n-key/require-default-value': ['error', { ...i18nRuleOptions, defaultValuePolicy: 'forbidden' }],
-    },
-  },
+			// per-rule override example
+			'i18n-key/invalid-layer': ['warn', i18nRuleOptions],
+			'i18n-key/require-default-value': ['error', { ...i18nRuleOptions, defaultValuePolicy: 'forbidden' }],
+		},
+	},
 ];
 ```
 
@@ -82,31 +83,23 @@ export default [
 
 ```ts
 type I18nRuleOptions = {
-  allowedPrefixes?: string[] | null;
-  sourceRoot?: string;
-  sharedLayers?: string[];
-  defaultValuePolicy?: 'required' | 'forbidden';
-  requireDefaultValue?: boolean;
-  checkInterpolationParams?: boolean;
-  disabledRules?: Array<
-    | 'invalid-char'
-    | 'invalid-structure'
-    | 'invalid-segment'
-    | 'invalid-prefix'
-    | 'invalid-layer'
-    | 'duplicate-suffix'
-    | 'require-default-value'
-  >;
+	allowedPrefixes?: string[] | null;
+	sourceRoot?: string;
+	sharedLayers?: string[];
+	defaultValuePolicy?: 'required' | 'forbidden';
+	requireDefaultValue?: boolean;
+	checkInterpolationParams?: boolean;
+	disabledRules?: Array<'invalid-char' | 'invalid-structure' | 'invalid-segment' | 'invalid-prefix' | 'invalid-layer' | 'duplicate-suffix' | 'require-default-value'>;
 };
 
 type I18nLintRuleOptions = I18nRuleOptions & {
-  acceptedTags?: string[];
-  acceptedAttributes?: string[];
-  ignoredTags?: string[];
-  ignoredAttributes?: string[];
-  autoFix?: boolean;
-  fixPrefix?: string;
-  i18nImportSource?: string;
+	acceptedTags?: string[];
+	acceptedAttributes?: string[];
+	ignoredTags?: string[];
+	ignoredAttributes?: string[];
+	autoFix?: boolean;
+	fixPrefix?: string;
+	i18nImportSource?: string;
 };
 ```
 
@@ -142,6 +135,7 @@ Notes:
 
 - `i18n-key/no-literal-string` (fixable)
 - `i18n-key/interpolation-params` (not fixable)
+- `i18n-key/prefer-interpolation` (not fixable)
 
 ## Auto Fix
 
@@ -275,6 +269,17 @@ Checks that interpolation placeholders in default text match option keys. (not f
 t('lzc_dev_center.pages.main.total', '{{count}} items', { total: 3 });
 // suggested
 t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3 });
+```
+
+### `i18n-key/prefer-interpolation`
+
+Warns when default text is built by string concatenation and recommends interpolation placeholders instead. (not fixable)
+
+```ts
+// before
+t('lzc_dev_center.pages.main.total', 'Total: ' + count);
+// suggested
+t('lzc_dev_center.pages.main.total', 'Total: {{count}}', { count });
 ```
 
 ## Exports

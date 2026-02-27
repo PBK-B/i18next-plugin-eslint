@@ -13,13 +13,25 @@ export async function runRule(
 		filePath = 'src/pages/main/index.jsx',
 		options,
 		fix = false,
+		languageOptions,
 	}: {
 		filePath?: string;
 		options?: Record<string, unknown>;
 		fix?: boolean;
+		languageOptions?: Record<string, unknown>;
 	} = {},
 ): Promise<LintRunResult> {
-	const ruleConfig = options === undefined ? 'error' : ['error', options];
+	const ruleConfig = (options === undefined ? 'error' : ['error', options]) as any;
+	const mergedLanguageOptions = {
+		ecmaVersion: 2022,
+		sourceType: 'module',
+		parserOptions: {
+			ecmaFeatures: {
+				jsx: true,
+			},
+		},
+		...languageOptions,
+	};
 
 	const eslint = new ESLint({
 		overrideConfigFile: true,
@@ -27,16 +39,8 @@ export async function runRule(
 		fix,
 		overrideConfig: [
 			{
-				files: ['**/*.{js,jsx,ts,tsx}'],
-				languageOptions: {
-					ecmaVersion: 2022,
-					sourceType: 'module',
-					parserOptions: {
-						ecmaFeatures: {
-							jsx: true,
-						},
-					},
-				},
+				files: ['**/*.{js,jsx,ts,tsx,vue}'],
+				languageOptions: mergedLanguageOptions,
 				plugins: {
 					'i18n-key': plugin,
 				},
@@ -45,7 +49,7 @@ export async function runRule(
 				},
 			},
 		],
-	});
+	} as any);
 
 	const [result] = await eslint.lintText(code, { filePath });
 	return {

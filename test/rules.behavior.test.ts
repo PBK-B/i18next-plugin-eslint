@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import vueParser from 'vue-eslint-parser';
 import { runRule } from './utils/eslint-runner';
 
 describe('behavior rules', () => {
@@ -59,5 +60,83 @@ describe('behavior rules', () => {
 	it('interpolation-params honors disabled check option', async () => {
 		const res = await runRule('interpolation-params', "t('app.pages.home.total', '{{count}} items', { total: 3 })", { options: { checkInterpolationParams: false } });
 		expect(res.messages).toHaveLength(0);
+	});
+
+	it('prefer-interpolation reports string concatenation in defaultValue', async () => {
+		const res = await runRule('prefer-interpolation', "t('app.pages.home.total', 'Total: ' + count)");
+		expect(res.messages).toHaveLength(1);
+		expect(res.messages[0]?.message).toContain('string concatenation');
+	});
+
+	it('prefer-interpolation reports object-style defaultValue concatenation', async () => {
+		const res = await runRule('prefer-interpolation', "t('app.pages.home.total', { defaultValue: 'Total: ' + count, count })");
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it('prefer-interpolation ignores static string defaultValue', async () => {
+		const res = await runRule('prefer-interpolation', "t('app.pages.home.total', 'Total')");
+		expect(res.messages).toHaveLength(0);
+	});
+
+	it('prefer-interpolation reports concatenation on translation result', async () => {
+		const res = await runRule('prefer-interpolation', "const text = t('app.pages.home.total', 'Total') + 'xxxx';");
+		expect(res.messages).toHaveLength(1);
+		expect(res.messages[0]?.message).toContain('Translation result is concatenated');
+	});
+
+	it('prefer-interpolation reports template concat around translation in jsx', async () => {
+		const res = await runRule('prefer-interpolation', "export const X=()=> <div>{`${t('app.pages.home.total', 'Total:')}${count}`}</div>", {
+			filePath: 'src/pages/main/index.tsx',
+		});
+		expect(res.messages).toHaveLength(1);
+		expect(res.messages[0]?.message).toContain('Translation result is concatenated');
+	});
+
+	it('prefer-interpolation reports concatenation around translation in vue template expression', async () => {
+		const code = `<template><div>{{ t('app.pages.home.total', 'Total:') + count }}</div></template>`;
+		const res = await runRule('prefer-interpolation', code, {
+			filePath: 'src/pages/main/index.vue',
+			languageOptions: {
+				parser: vueParser,
+			},
+		});
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it('prefer-interpolation reports template-string concat in vue sfc script', async () => {
+		const code = `<script setup>const text = \`${"${t('app.pages.home.total', 'Total:')}${count}"}\`;</script>`;
+		const res = await runRule('prefer-interpolation', code, {
+			filePath: 'src/pages/main/index.vue',
+			languageOptions: {
+				parser: vueParser,
+			},
+		});
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it('prefer-interpolation reports += concatenation on translation result', async () => {
+		const res = await runRule('prefer-interpolation', "let text = ''; text += t('app.pages.home.total', 'Total')");
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it('prefer-interpolation reports concat() around translation result', async () => {
+		const res = await runRule('prefer-interpolation', "const text = 'prefix '.concat(t('app.pages.home.total', 'Total'))");
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it("prefer-interpolation reports join('') around translation result", async () => {
+		const res = await runRule('prefer-interpolation', "const text = [t('app.pages.home.total', 'Total'), suffix].join('')");
+		expect(res.messages).toHaveLength(1);
+	});
+
+	it('prefer-interpolation ignores non-empty separator join()', async () => {
+		const res = await runRule('prefer-interpolation', "const text = [t('app.pages.home.total', 'Total'), suffix].join(',')");
+		expect(res.messages).toHaveLength(0);
+	});
+
+	it('prefer-interpolation reports defaultValue template string', async () => {
+		const res = await runRule('prefer-interpolation', "t('app.pages.home.total', `Total: ${count}`)");
+		expect(res.messages).toHaveLength(1);
+		expect(res.messages[0]?.message).toContain('Default text uses string concatenation');
 	});
 });

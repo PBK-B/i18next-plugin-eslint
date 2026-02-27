@@ -1,93 +1,99 @@
 {
-    "name": "@i18next-plugin/eslint",
-    "version": "1.0.1",
-    "description": "ESLint plugin for i18next key and literal text rules.",
-    "type": "module",
-    "main": "./dist/cjs/index.js",
-    "module": "./dist/esm/index.js",
-    "types": "./types/index.d.ts",
-    "exports": {
-        "./package.json": "./package.json",
-        ".": {
-            "types": "./types/index.d.ts",
-            "require": "./dist/cjs/index.js",
-            "default": "./dist/esm/index.js"
-        },
-        "./cjs": {
-            "types": "./types/index.d.ts",
-            "default": "./dist/cjs/index.js"
-        },
-        "./esm": {
-            "types": "./types/index.d.ts",
-            "default": "./dist/esm/index.js"
-        }
-    },
-    "files": [
-        "dist",
-        "types",
-        "README.md",
-        "README.zh-CN.md",
-        "CHANGELOG.md",
-        "package.json",
-        "LICENSE"
-    ],
-    "scripts": {
-        "build": "rm -rf dist && rollup -c && rm -rf types && tsc -p tsconfig.json -d --declarationDir types --declarationMap --emitDeclarationOnly",
-        "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-        "typecheck": "tsc -p tsconfig.json --noEmit",
-        "test": "npm run lint && npm run typecheck && vitest run",
-        "test:coverage": "vitest run --coverage",
-        "test:watch": "vitest",
-        "clean": "rm -rf dist types",
-        "release": "release-it patch"
-    },
-    "keywords": [
-        "eslint",
-        "eslint-plugin",
-        "i18next",
-        "typescript"
-    ],
-    "author": "PBK-B",
-    "license": "MIT",
-    "peerDependencies": {
-        "eslint": ">=9"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.39.1",
-        "@release-it/conventional-changelog": "^10.0.5",
-        "@rollup/plugin-replace": "^6.0.3",
-        "@types/node": "^24.3.0",
-        "eslint": "^9.39.1",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-prettier": "^5.5.5",
-        "prettier": "^3.8.1",
-        "release-it": "^19.2.4",
-        "rollup": "^4.50.0",
-        "rollup-plugin-typescript2": "^0.36.0",
-        "typescript": "^5.9.2",
-        "typescript-eslint": "^8.46.0",
-        "vitest": "^4.0.7",
-        "@vitest/coverage-v8": "^4.0.7"
-    },
-    "release-it": {
-        "git": {
-            "requireCleanWorkingDir": false,
-            "commitMessage": "chore: release v${version}",
-            "commit": true,
-            "tag": true,
-            "push": false
-        },
-        "npm": {
-            "publish": false
-        },
-        "plugins": {
-            "@release-it/conventional-changelog": {
-                "preset": "angular",
-                "infile": "CHANGELOG.md"
-            }
-        }
-    }
+	"name": "@i18next-plugin/eslint",
+	"version": "1.0.1",
+	"description": "ESLint plugin for i18next key and literal text rules.",
+	"type": "module",
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"types": "./types/index.d.ts",
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"types": "./types/index.d.ts",
+			"require": "./dist/cjs/index.js",
+			"default": "./dist/esm/index.js"
+		},
+		"./cjs": {
+			"types": "./types/index.d.ts",
+			"default": "./dist/cjs/index.js"
+		},
+		"./esm": {
+			"types": "./types/index.d.ts",
+			"default": "./dist/esm/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"types",
+		"README.md",
+		"README.zh-CN.md",
+		"CHANGELOG.md",
+		"package.json",
+		"LICENSE"
+	],
+	"scripts": {
+		"build": "rm -rf dist && rollup -c && rm -rf types && tsc -p tsconfig.json -d --declarationDir types --declarationMap --emitDeclarationOnly",
+		"lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "npm run lint && npm run typecheck && vitest run",
+		"test:coverage": "vitest run --coverage",
+		"test:watch": "vitest",
+		"clean": "rm -rf dist types",
+		"release": "release-it patch"
+	},
+	"keywords": [
+		"eslint",
+		"eslint-plugin",
+		"i18next",
+		"typescript"
+	],
+	"author": "PBK-B",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PBK-B/i18next-cli-vue"
+	},
+	"peerDependencies": {
+		"eslint": ">=9"
+	},
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org",
+		"access": "public"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.1",
+		"@release-it/conventional-changelog": "^10.0.5",
+		"@rollup/plugin-replace": "^6.0.3",
+		"@types/node": "^24.3.0",
+		"@vitest/coverage-v8": "^4.0.7",
+		"eslint": "^9.39.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.5",
+		"prettier": "^3.8.1",
+		"release-it": "^19.2.4",
+		"rollup": "^4.50.0",
+		"rollup-plugin-typescript2": "^0.36.0",
+		"typescript": "^5.9.2",
+		"typescript-eslint": "^8.46.0",
+		"vitest": "^4.0.7",
+		"vue-eslint-parser": "^10.4.0"
+	},
+	"release-it": {
+		"git": {
+			"requireCleanWorkingDir": false,
+			"commitMessage": "chore: release v${version}",
+			"commit": true,
+			"tag": true,
+			"push": false
+		},
+		"npm": {
+			"publish": false
+		},
+		"plugins": {
+			"@release-it/conventional-changelog": {
+				"preset": "angular",
+				"infile": "CHANGELOG.md"
+			}
+		}
+	}
 }
