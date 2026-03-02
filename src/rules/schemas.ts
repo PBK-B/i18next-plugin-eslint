@@ -20,6 +20,10 @@ export const baseSchema = {
 		checkInterpolationParams: {
 			type: 'boolean',
 		},
+		ignoredOptionKeys: {
+			type: 'array',
+			items: { type: 'string' },
+		},
 		requireDefaultValue: {
 			anyOf: [{ type: 'boolean' }, { enum: ['required', 'forbidden'] }],
 		},
@@ -53,6 +57,10 @@ export const lintSchema = {
 		},
 		checkInterpolationParams: {
 			type: 'boolean',
+		},
+		ignoredOptionKeys: {
+			type: 'array',
+			items: { type: 'string' },
 		},
 		requireDefaultValue: {
 			anyOf: [{ type: 'boolean' }, { enum: ['required', 'forbidden'] }],

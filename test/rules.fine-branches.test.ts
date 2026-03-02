@@ -81,11 +81,24 @@ describe('fine-grained branch cases', () => {
 		const ignoreReserved = await runRule('interpolation-params', "t('app.pages.main.total', '{{name}}', { name: 1, ns: 'x' })");
 		expect(ignoreReserved.messages).toHaveLength(0);
 
+		const ignoreTOptions = await runRule(
+			'interpolation-params',
+			"t('app.pages.main.total', '{{name}}', { name: 1, returnDetails: true, lng: 'zh-CN', interpolation: { escapeValue: false }, replace: { x: 1 } })",
+		);
+		expect(ignoreTOptions.messages).toHaveLength(0);
+
 		const aliasNotTracked = await runRule(
 			'interpolation-params',
 			"import { useTranslation as useT } from 'react-i18next'; const { t: tx = t } = useT(); tx('app.pages.main.total', '{{name}}', { name: 1 })",
 		);
 		expect(aliasNotTracked.messages).toHaveLength(0);
+	});
+
+	it('interpolation-params supports custom ignoredOptionKeys', async () => {
+		const res = await runRule('interpolation-params', "t('app.pages.main.total', '{{name}}', { name: 1, customMeta: 'x' })", {
+			options: { ignoredOptionKeys: ['customMeta'] },
+		});
+		expect(res.messages).toHaveLength(0);
 	});
 
 	it('no-literal-string reports without fix when autoFix is false', async () => {

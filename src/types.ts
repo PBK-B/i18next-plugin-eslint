@@ -7,6 +7,7 @@ export interface BaseI18nRuleOptions {
 	sourceRoot?: string;
 	sharedLayers?: string[];
 	checkInterpolationParams?: boolean;
+	ignoredOptionKeys?: string[];
 	requireDefaultValue?: boolean;
 	defaultValuePolicy?: DefaultValuePolicy;
 	disabledRules?: Array<'invalid-char' | 'invalid-structure' | 'invalid-segment' | 'invalid-prefix' | 'invalid-layer' | 'duplicate-suffix' | 'require-default-value'>;

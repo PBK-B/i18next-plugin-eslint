@@ -18,7 +18,31 @@ export const interpolationParamsRule = {
 
 		const trackedTNames = new Set(['t']);
 		const useTranslationNames = new Set(['useTranslation']);
-		const ignoredOptionKeys = new Set(['defaultValue', 'ns', 'count', 'context', 'ordinal', 'returnObjects', 'joinArrays', 'postProcess', 'fallbackLng']);
+		const defaultIgnoredOptionKeys = [
+			'defaultValue',
+			'ns',
+			'count',
+			'context',
+			'ordinal',
+			'returnObjects',
+			'returnDetails',
+			'joinArrays',
+			'postProcess',
+			'fallbackLng',
+			'lng',
+			'lngs',
+			'keySeparator',
+			'nsSeparator',
+			'interpolation',
+			'skipInterpolation',
+			'compatibilityJSON',
+			'defaultVariables',
+			'replace',
+		];
+		const ignoredOptionKeys = new Set([
+			...defaultIgnoredOptionKeys,
+			...(Array.isArray(options.ignoredOptionKeys) ? options.ignoredOptionKeys.map((item: any) => String(item)) : []),
+		]);
 
 		function resolveDefaultValueAndOptions(callNode: any) {
 			const arg1 = callNode.arguments[1];

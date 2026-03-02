@@ -48,6 +48,7 @@ const i18nRuleOptions = {
 	sharedLayers: ['common'],
 	defaultValuePolicy: 'required',
 	checkInterpolationParams: true,
+	ignoredOptionKeys: ['customMeta'],
 
 	// no-literal-string options
 	autoFix: true,
@@ -89,6 +90,7 @@ type I18nRuleOptions = {
 	defaultValuePolicy?: 'required' | 'forbidden';
 	requireDefaultValue?: boolean;
 	checkInterpolationParams?: boolean;
+	ignoredOptionKeys?: string[];
 	disabledRules?: Array<'invalid-char' | 'invalid-structure' | 'invalid-segment' | 'invalid-prefix' | 'invalid-layer' | 'duplicate-suffix' | 'require-default-value'>;
 };
 
@@ -110,6 +112,7 @@ Default behavior:
 - `sharedLayers`: `[]`
 - `defaultValuePolicy`: `required`
 - `checkInterpolationParams`: `true`
+- `ignoredOptionKeys`: `['defaultValue', 'ns', 'count', 'context', 'ordinal', 'returnObjects', 'returnDetails', 'joinArrays', 'postProcess', 'fallbackLng', 'lng', 'lngs', 'keySeparator', 'nsSeparator', 'interpolation', 'skipInterpolation', 'compatibilityJSON', 'defaultVariables', 'replace']`
 
 Notes:
 
@@ -264,11 +267,23 @@ Detects hardcoded natural-language text in JSX text/attributes. (fixable)
 
 Checks that interpolation placeholders in default text match option keys. (not fixable)
 
+Default `ignoredOptionKeys`:
+
+- `defaultValue`, `ns`, `count`, `context`, `ordinal`, `returnObjects`, `returnDetails`, `joinArrays`, `postProcess`, `fallbackLng`, `lng`, `lngs`, `keySeparator`, `nsSeparator`, `interpolation`, `skipInterpolation`, `compatibilityJSON`, `defaultVariables`, `replace`
+
+You can extend this list with rule option `ignoredOptionKeys`.
+
 ```ts
 // before
 t('lzc_dev_center.pages.main.total', '{{count}} items', { total: 3 });
 // suggested
 t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3 });
+```
+
+```ts
+// custom ignore keys
+/* eslint i18n-key/interpolation-params: ["warn", { ignoredOptionKeys: ["customMeta"] }] */
+t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3, customMeta: 'x' });
 ```
 
 ### `i18n-key/prefer-interpolation`

@@ -48,6 +48,7 @@ const i18nRuleOptions = {
 	sharedLayers: ['common'],
 	defaultValuePolicy: 'required',
 	checkInterpolationParams: true,
+	ignoredOptionKeys: ['customMeta'],
 
 	// no-literal-string 可选项
 	autoFix: true,
@@ -89,6 +90,7 @@ type I18nRuleOptions = {
 	defaultValuePolicy?: 'required' | 'forbidden';
 	requireDefaultValue?: boolean;
 	checkInterpolationParams?: boolean;
+	ignoredOptionKeys?: string[];
 	disabledRules?: Array<'invalid-char' | 'invalid-structure' | 'invalid-segment' | 'invalid-prefix' | 'invalid-layer' | 'duplicate-suffix' | 'require-default-value'>;
 };
 
@@ -110,6 +112,7 @@ type I18nLintRuleOptions = I18nRuleOptions & {
 - `sharedLayers`: `[]`
 - `defaultValuePolicy`: `required`
 - `checkInterpolationParams`: `true`
+- `ignoredOptionKeys`: `['defaultValue', 'ns', 'count', 'context', 'ordinal', 'returnObjects', 'returnDetails', 'joinArrays', 'postProcess', 'fallbackLng', 'lng', 'lngs', 'keySeparator', 'nsSeparator', 'interpolation', 'skipInterpolation', 'compatibilityJSON', 'defaultVariables', 'replace']`
 
 说明：
 
@@ -264,11 +267,23 @@ t('lzc_dev_center.pages.main.index.submit');
 
 校验默认文案中的插值参数与 options 参数名一致。（不可自动修复）
 
+`ignoredOptionKeys` 默认值：
+
+- `defaultValue`、`ns`、`count`、`context`、`ordinal`、`returnObjects`、`returnDetails`、`joinArrays`、`postProcess`、`fallbackLng`、`lng`、`lngs`、`keySeparator`、`nsSeparator`、`interpolation`、`skipInterpolation`、`compatibilityJSON`、`defaultVariables`、`replace`
+
+可通过规则参数 `ignoredOptionKeys` 追加自定义忽略项。
+
 ```ts
 // 修复前
 t('lzc_dev_center.pages.main.total', '{{count}} items', { total: 3 });
 // 建议修复后
 t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3 });
+```
+
+```ts
+// 自定义忽略项
+/* eslint i18n-key/interpolation-params: ["warn", { ignoredOptionKeys: ["customMeta"] }] */
+t('lzc_dev_center.pages.main.total', '{{count}} items', { count: 3, customMeta: 'x' });
 ```
 
 ### `i18n-key/prefer-interpolation`
