@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/PBK-B/i18next-plugin-eslint/compare/1.0.2...1.0.3) (2026-03-02)
+
+
+### Features
+
+* add `ignoredOptionKeys` for interpolation-params ([f2cc498](https://github.com/PBK-B/i18next-plugin-eslint/commit/f2cc498b5910fd2951006b5946e03661451266bc))
+
 ## [1.0.2](https://github.com/PBK-B/i18next-plugin-eslint/compare/1.0.1...1.0.2) (2026-02-27)
 
 
