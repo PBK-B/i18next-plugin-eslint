@@ -51,7 +51,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/PBK-B/i18next-cli-vue"
+		"url": "https://github.com/PBK-B/i18next-plugin-eslint"
 	},
 	"peerDependencies": {
 		"eslint": ">=9"
